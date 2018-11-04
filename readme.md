@@ -13,8 +13,6 @@ The license is issued to the user’s wallet and while they’re in possession o
 ## How to run the project
 The smart contracts have been set up to compile and run with truffle. The front end was created with `vuejs` and `elementsUI`. The project has been tested on: Windows 10, Arch Linux and Ubuntu 16.04 and run successfully on all platforms without errors. 
 
-**To interact with the dapp, you can skip the truffle steps and jump directly to `npm run serve` after `npm install` as the contracts have been deployed on the Rinkeby Testnet. No further configuration is required after pointing Metamask to the correct testnet.**
-
 Requirements to run the project are: `Node>=8.11`,`npm` and `truffle`. To begin with, we need to install all required libraries and utilities. From the root of the repo, run:
 
     npm install
