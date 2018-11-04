@@ -150,6 +150,24 @@ contract('CampaignManager', function (accounts) {
 
         // Set time to during the campaign and then try fund it.
         await increaseTimeTo(duringCampaignTime);
+
+        // test donation and reduction of license amount
+        await campaignManager.fundCampaign(campaignID, {
+            from: funder1,
+            value: ether(4)
+        })
+
+        let campaignLicenses = await campaignManager.fetchCampaignLicenses.call(campaignID, funder1);
+        assert.equal(campaignLicenses, 1, "Funder 1 does not have 1 license")
+
+        let responce = await campaignManager.reduceDontation(campaignID, ether(4), {
+            from: funder1
+        })
+
+        campaignLicenses = await campaignManager.fetchCampaignLicenses.call(campaignID, funder1);
+        assert.equal(campaignLicenses.toNumber(), 0, "Funder 1 does not have 0 license")
+
+        // test donation of more than license amount
         await campaignManager.fundCampaign(campaignID, {
             from: funder1,
             value: validDonation
@@ -158,10 +176,10 @@ contract('CampaignManager', function (accounts) {
         assert.equal(campaignValues[3]['c'][0], validDonation['c'][0], "Balance should be equal to the donation amount")
         //Next, we want to reduce our donation by a set amount and check we get the ether back correctly and that the fund is reduced
 
-        let campaignLicenses = await campaignManager.fetchCampaignLicenses.call(campaignID, funder1);
+        campaignLicenses = await campaignManager.fetchCampaignLicenses.call(campaignID, funder1);
         assert.equal(campaignLicenses, 1, "Funder 1 does not have 1 license")
 
-        let responce = await campaignManager.reduceDontation(campaignID, (validDonation / 2), {
+        responce = await campaignManager.reduceDontation(campaignID, (validDonation / 2), {
             from: funder1
         })
         
