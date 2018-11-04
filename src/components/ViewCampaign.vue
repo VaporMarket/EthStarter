@@ -59,23 +59,23 @@
     <el-button :disabled="CampaignStatus=='Not Started' || CampaignStatus=='Ended'" @click="fundCurrentCampaign" type="primary">Fund Campaign</el-button>
 <br>
 <div v-if="isFunder && !failedCampaign">
-    <p><strong>You have contributed to this project!</strong> If the campaign has not ended you can reduce your donation. <br> Please not that you can only with reduce your donation if it wont make a passing campaign fail.</p>
+    <p><strong>You have contributed to this presale!</strong> If the campaign has not ended you can reduce your donation. <br> Please not that you can only with reduce your donation if it wont make a passing campaign fail.</p>
     <el-input-number :disabled="CampaignStatus=='Not Started' || CampaignStatus=='Ended'" v-model="reduceAmount" :precision="2" :step="0.1"></el-input-number> Ether  
     <el-button :disabled="CampaignStatus=='Not Started' || CampaignStatus=='Ended'" @click="donerReduceDonationAmount" type="primary">Reduce Donation</el-button>
   </div>
 
     <div v-if="isFunder && failedCampaign">
-    <p><strong>You have contributed to this project!</strong>. However, the campaign has ended and it failed!<br> You can withdraw your donation </p>
+    <p><strong>You have contributed to this project!</strong>. However, the campaign has ended and it failed!<br> You can withdraw your presale contribution </p>
     <el-button @click="withdrawFromFailedCampaign" type="primary">Withdraw Donation</el-button>
     </div>
 
 <div v-if="isManager && !failedCampaign">
-    <p><strong>You are the manager for this project!</strong> If the campaign has ended and was successful, you can withdraw all the donation funds.</p>
+    <p><strong>You are the manager for this presale!</strong> If the campaign has ended and was successful, you can withdraw all the presale funds.</p>
     <el-button :disabled="CampaignStatus!='Ended'" @click="managerWithdrawFromCampaign" type="primary">Withdraw From Campaign</el-button>
   </div>
 
   <div v-if="isManager && failedCampaign">
-    <p><strong>You manage to this project!</strong>. However, the campaign has ended and it failed! </p>
+    <p><strong>You manage to this presale!</strong>. However, the campaign has ended and it failed! </p>
     </div>
 </div>
 </template>
@@ -140,7 +140,8 @@ export default {
       // is worth it here until I can think of a better way to do it while keeping effecient
       console.log("Contract data")
       console.log(this.contractReturnedData)
-      this.ipfsReturnedData = await viewFile(this.contractReturnedData[7]);
+      this.ipfsReturnedData = await viewFile(this.contractReturnedData[6]);
+      console.log("ipfs data")
       console.log(this.ipfsReturnedData)
       //update the display for the time every second
       setInterval(
@@ -166,7 +167,7 @@ export default {
         balance = "0 Ether";
       }
 
-      let funders = this.contractReturnedData[6];
+      let funders = this.contractReturnedData[5];
       let fundersString = "";
       if (funders == [] || funders == "") {
         fundersString = "None yet...";
@@ -230,7 +231,7 @@ export default {
           this.contractReturnedData[1] - currentTime
         );
         this.CampaignStatusTime =
-          "Campaign Presale Starts in " +
+          "Presale Starts in " +
           timeBetween["d"] +
           " days, " +
           timeBetween["h"] +
@@ -250,7 +251,7 @@ export default {
           this.contractReturnedData[2] - currentTime
         );
         this.CampaignStatusTime =
-          "Campaign Presale ends in " +
+          "Presale ends in " +
           timeBetween["d"] +
           " days, " +
           timeBetween["h"] +
@@ -267,7 +268,7 @@ export default {
           currentTime - this.contractReturnedData[2]
         );
         this.CampaignStatusTime =
-          "Campaign presale ended " +
+          "Presale ended " +
           +timeBetween["d"] +
           " days, " +
           timeBetween["h"] +
@@ -302,7 +303,7 @@ export default {
     },
     async identifyIfContributer() {
       if (
-        this.contractReturnedData[6].indexOf(
+        this.contractReturnedData[5].indexOf(
           this.$store.state.defaultEthWallet.toLowerCase()
         ) > -1
       ) {
