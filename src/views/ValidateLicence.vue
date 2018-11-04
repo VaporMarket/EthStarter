@@ -1,10 +1,14 @@
 <template>
   <div class="home">
-    <h1>Are you a winner?!</h1>
+    <h1>Introducing THE Button...</h1>
     <br>
-    <el-button type="primary" @click="validate">Am I registered with a licence?</el-button>
+    <el-button type="primary" @click="validate">Am I a winner?</el-button>
     <br>
-    Number of Licenses for game {{returnVerifyState}}
+    <br>
+    
+    <h1 class="success" v-if="returnVerifyState>0" style="background:green">I AM A WINNER!</h1>
+    <h1 v-if="returnVerifyState==0" style="background:red">I AM A LOOSER!</h1>
+
   </div>
 </template>
 
@@ -16,7 +20,7 @@ export default {
   name: 'home',
   data(){
     return {
-      returnVerifyState: 0
+      returnVerifyState: null
     }
   },
   methods:{
