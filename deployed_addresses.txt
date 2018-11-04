@@ -1,1 +1,1 @@
-CampaignManager: 0x606ef68473dfb6a51d2bdffe9f24e3c88d317a0b
+CampaignManager: 0xaa818a8577cb1ecbb58977f7794e951a97e81395
